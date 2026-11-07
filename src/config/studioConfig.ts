@@ -14,10 +14,10 @@ export const defaultStudioConfig: StudioConfig = {
     "address": "Краснодар, Центральный внутригородской округ, микрорайон Центральный, ул. Братьев Игнатовых, 182",
     "schedule": "Пн.–Вс. 9:00–20:00",
     "messenger": {
-      "type": "whatsapp",
-      "url": "https://wa.me/79385044440?text=Здравствуйте!%20Хочу%20записаться%20в%20студию%20ГудВуд%20на%20осмотр%20и%20расчет%20стоимости",
-      "label": "Написать в WhatsApp",
-      "chatActionText": "WhatsApp чат"
+      "type": "max",
+      "url": "https://max.ru/u/f9LHodD0cOJKGPqJtajZowEijaQ-oM4wXbWuSy9kzKNCSZWYVN-RoBA7YVk",
+      "label": "Написать в Max",
+      "chatActionText": "Max чат"
     }
   },
   "hero": {
@@ -27,7 +27,7 @@ export const defaultStudioConfig: StudioConfig = {
     "titleLine2": "и детейлинг в Краснодаре.",
     "description": "Официальный центр детейлинга «ГудВуд» в Краснодаре. Оклейка антигравийным полиуретаном, восстановительная полировка, нанокерамика 9H и деликатная химчистка салона.",
     "ctaPrimaryText": "Записаться на осмотр",
-    "ctaSecondaryText": "Рассчитать в WhatsApp"
+    "ctaSecondaryText": "Рассчитать в Max"
   },
   "rating": {
     "score": "5.0",
