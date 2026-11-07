@@ -8,7 +8,7 @@ export const defaultStudioConfig: StudioConfig = {
     "namePrefix": "ДЕТЕЙЛИНГ",
     "nameHighlight": "ГУДВУД",
     "tagline": "Премиальный детейлинг и оклейка PPF · Краснодар",
-    "logoUrl": "/photos/goodwood/logo.jpg",
+    "logoUrl": "/photos/goodwood/logo.png",
     "phoneRaw": "+79385044440",
     "phoneDisplay": "+7 (938) 504-44-40",
     "address": "Краснодар, Центральный внутригородской округ, микрорайон Центральный, ул. Братьев Игнатовых, 182",

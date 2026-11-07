@@ -82,8 +82,8 @@ function ScrollProgress() {
 function Logo({ light = true }: { light?: boolean }) {
   return <Link to="/" className={cn('group flex items-center gap-3', light ? 'text-bone' : 'text-ink')} aria-label={`${STUDIO_NAME} — главная`}>
     {studio.branding.logoUrl ? (
-      <div className="relative size-11 overflow-hidden rounded-xl border border-white/20 bg-black transition duration-300 group-hover:border-acid shrink-0">
-        <img src={studio.branding.logoUrl} alt={`Логотип ${STUDIO_NAME}`} className="h-full w-full object-cover" />
+      <div className="relative size-11 overflow-hidden rounded-xl border border-white/20 bg-white p-1 transition duration-300 group-hover:border-acid shrink-0 flex items-center justify-center">
+        <img src={studio.branding.logoUrl} alt={`Логотип ${STUDIO_NAME}`} className="h-full w-full object-contain" />
       </div>
     ) : (
       <span className={cn('relative grid size-10 place-items-center overflow-hidden rounded-[11px] border transition duration-500 group-hover:rotate-3', light ? 'border-white/25 bg-white/[.04]' : 'border-black/20')}>
