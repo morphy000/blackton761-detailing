@@ -129,13 +129,13 @@ export const defaultStudioConfig: StudioConfig = {
     }
   ],
   "gallery": [
-    "/photos/geen_auto_spa/geen_1.jpg",
     "/photos/geen_auto_spa/geen_2.jpg",
-    "/photos/geen_auto_spa/geen_3.jpg",
     "/photos/geen_auto_spa/geen_4.jpg",
+    "/images/bmw.webp",
     "/images/project-sedan.webp",
-    "/images/project-ev.webp"
-  ],
+    "/images/project-ev.webp",
+    "/images/audi.webp"
+],
   "testimonials": [
     {
       "quote": "Максимально трепетное внимание к моим просьбам, все сделали на высшем уровне. Предложили сделать кондиционер на кожаные сиденья, чтобы кожа была мягкая и не трескалась, так же бронь и поклейку авто! Цены приятно удивили и скорость выполнения заказа. Буду к вам ездить и Вас рекомендовать!",
