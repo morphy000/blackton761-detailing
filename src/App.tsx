@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { cn } from './lib/utils'
 
-const WHATSAPP_URL = "https://wa.me/79184422669"
+const MAX_CHAT_URL = "https://max.ru/u/f9LHodD0cOJKGPqJtajZowEijaQ-oM4wXbWuSy9kzKNCSZWYVN-RoBA7YVk"
 const PHONE_DISPLAY = "+7 (918) 442-26-69"
 const PHONE_RAW = "+79184422669"
 const YANDEX_REVIEWS_URL = "https://yandex.com/maps/org/blesk/170427377596/reviews/"
@@ -118,8 +118,8 @@ function Header() {
         {links.map(([name, href]) => <a key={name} href={href} className="text-sm font-medium text-white/70 transition hover:text-white">{name}</a>)}
       </nav>
       <div className="hidden items-center gap-4 sm:flex">
-        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-xs font-semibold text-emerald-400 transition hover:bg-emerald-500 hover:text-black">
-          <MessageCircle size={15} /> WhatsApp
+        <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-4 py-2.5 text-xs font-semibold text-indigo-300 transition hover:bg-indigo-600 hover:text-white">
+          <MessageCircle size={15} /> Чат в Max
         </a>
         <a href={`tel:${PHONE_RAW}`} className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-acid hover:bg-acid hover:text-ink">
           <Phone size={14} /> {PHONE_DISPLAY}
@@ -131,8 +131,8 @@ function Header() {
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: .05 } } }}>
         {links.map(([name, href], i) => <motion.a variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0 } }} key={name} href={href} onClick={() => setOpen(false)} className="flex items-center justify-between border-b border-white/10 py-4 font-display text-2xl text-bone"><span>{name}</span><span className="font-sans text-[10px] text-white/30">0{i + 1}</span></motion.a>)}
         <div className="mt-6 flex flex-col gap-3">
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3.5 font-bold text-black">
-            <MessageCircle size={17} /> Написать в WhatsApp
+          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-6 py-3.5 font-bold text-white transition hover:bg-indigo-500">
+            <MessageCircle size={17} /> Написать в Max
           </a>
           <a href={`tel:${PHONE_RAW}`} className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 font-semibold text-white">
             <Phone size={17} /> Позвонить {PHONE_DISPLAY}
@@ -172,8 +172,8 @@ function Hero() {
           <a href="#kontakt" className="group flex min-h-14 items-center justify-between gap-6 rounded-full bg-acid px-7 font-bold text-ink transition hover:bg-white active:scale-[0.98]">
             Записаться на осмотр <ArrowRight className="transition group-hover:translate-x-1" size={19} />
           </a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex min-h-14 items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-7 font-semibold text-emerald-400 transition hover:bg-emerald-500 hover:text-black">
-            <MessageCircle size={18} /> Написать в WhatsApp
+          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex min-h-14 items-center justify-center gap-2 rounded-full border border-indigo-400/40 bg-indigo-500/15 px-7 font-semibold text-indigo-300 transition hover:bg-indigo-600 hover:text-white">
+            <MessageCircle size={18} /> Написать в Max
           </a>
         </motion.div>
       </motion.div>
@@ -232,8 +232,8 @@ function Projects() {
           Реальные фотографии автомобилей и процессов ухода без фильтров и искусственной ретуши.
         </p>
       </div>
-      <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white">
-        <MessageCircle size={17} /> Запросить больше фото в WhatsApp
+      <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white">
+        <MessageCircle size={17} /> Запросить больше фото в Max
       </a>
     </motion.div>
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -300,7 +300,7 @@ function PriceCard({ title, price, desc, items, featured }: { title: string, pri
     </div>
     <div className="mt-8 pt-6 border-t border-black/10">
       <a
-        href={`${WHATSAPP_URL}?text=${waText}`}
+        href={MAX_CHAT_URL}
         target="_blank"
         rel="noreferrer"
         className={cn(
@@ -310,7 +310,7 @@ function PriceCard({ title, price, desc, items, featured }: { title: string, pri
             : 'border border-black/15 bg-black/[0.03] text-ink hover:border-black hover:bg-black hover:text-white'
         )}
       >
-        <MessageCircle size={15} /> Выбрать пакет
+        <MessageCircle size={15} /> Выбрать услугу в Max
       </a>
     </div>
   </motion.article>
@@ -470,7 +470,7 @@ function Contact() {
 Автомобиль: ${car}
 Услуга: ${selectedService}`
 
-    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(message)}`, '_blank')
+    window.open(MAX_CHAT_URL, '_blank')
     setSent(true)
   }
 
@@ -486,9 +486,9 @@ function Contact() {
             <span className="grid size-11 place-items-center rounded-full border border-white/15"><Phone size={18} /></span>
             <div><span className="block text-xs text-white/40">Прямой звонок</span><b className="text-lg">{PHONE_DISPLAY}</b></div>
           </a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-emerald-400">
-            <span className="grid size-11 place-items-center rounded-full border border-emerald-500/30 bg-emerald-500/10"><MessageCircle size={18} /></span>
-            <div><span className="block text-xs text-white/40">WhatsApp чат</span><b className="text-lg">Написать мастеру</b></div>
+          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-indigo-400">
+            <span className="grid size-11 place-items-center rounded-full border border-indigo-500/30 bg-indigo-500/10"><MessageCircle size={18} /></span>
+            <div><span className="block text-xs text-white/40">Чат в Max</span><b className="text-lg">Написать мастеру в Max</b></div>
           </a>
           <div className="flex items-center gap-4">
             <span className="grid size-11 place-items-center rounded-full border border-white/15"><MapPin size={18} /></span>
@@ -502,7 +502,7 @@ function Contact() {
             <div>
               <span className="mx-auto grid size-14 place-items-center rounded-full bg-acid"><Check /></span>
               <h3 className="mt-6 font-display text-3xl font-bold">Заявка отправлена.</h3>
-              <p className="mt-3 text-sm text-black/60">Мы открыли чат WhatsApp для согласования удобного времени визита.</p>
+              <p className="mt-3 text-sm text-black/60">Мы открыли чат в Max для согласования удобного времени визита.</p>
               <button
                 type="button"
                 onClick={() => setSent(false)}
@@ -539,12 +539,12 @@ function Contact() {
             </label>
             <button
               type="submit"
-              className="mt-6 flex min-h-14 w-full items-center justify-between rounded-full bg-ink px-7 font-bold text-white transition hover:bg-acid hover:text-ink"
+              className="mt-6 flex min-h-14 w-full items-center justify-between rounded-full bg-indigo-600 px-7 font-bold text-white transition hover:bg-indigo-500"
             >
-              Записаться в WhatsApp <ArrowRight size={18} />
+              Записаться через Max <ArrowRight size={18} />
             </button>
             <span className="mt-3 block text-center text-[11px] text-black/50">
-              Отвечаем в течение 5 минут в рабочее время
+              Или позвоните нам напрямую: +7 (918) 442-26-69
             </span>
           </>
         )}
@@ -576,7 +576,7 @@ function Footer() {
         <div className="text-sm">
           <b className="mb-4 block text-xs uppercase tracking-widest text-white/35">Связь</b>
           <a href={`tel:${PHONE_RAW}`} className="block font-semibold">{PHONE_DISPLAY}</a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-2 block text-emerald-400">WhatsApp чат</a>
+          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="mt-2 block text-indigo-400">Чат в Max</a>
         </div>
       </div>
       <div className="flex flex-col gap-4 pt-7 text-[11px] text-white/35 sm:flex-row sm:justify-between">
@@ -611,12 +611,12 @@ function Home() {
         initial={{ y: 90 }}
         animate={{ y: 0 }}
         transition={{ delay: .8, type: 'spring', stiffness: 180, damping: 22 }}
-        href={WHATSAPP_URL}
+        href={MAX_CHAT_URL}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full bg-emerald-500 px-6 font-bold text-black shadow-2xl sm:hidden"
+        className="fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full bg-indigo-600 px-6 font-bold text-white shadow-2xl sm:hidden"
       >
-        <span>Рассчитать в WhatsApp</span>
+        <span>Написать в Max</span>
         <MessageCircle size={20} />
       </motion.a>
     </motion.div>}
