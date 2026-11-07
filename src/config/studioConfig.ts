@@ -15,7 +15,7 @@ export const defaultStudioConfig: StudioConfig = {
     "schedule": "Пн.–Вс. 10:00–21:00",
     "messenger": {
       "type": "max",
-      "url": "https://max.ru/u/f9LHodD0cOJKGPqJtajZowEijaQ-oM4wXbWuSy9kzKNCSZWYVN-RoBA7YVk",
+      "url": "",
       "label": "Написать в Max",
       "chatActionText": "Max чат"
     }

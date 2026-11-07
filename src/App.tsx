@@ -11,6 +11,7 @@ import { getActiveStudioConfig } from './config/studioConfig'
 
 const studio = getActiveStudioConfig()
 const MESSENGER_URL = studio.branding.messenger.url
+const HAS_MESSENGER = Boolean(MESSENGER_URL && MESSENGER_URL.trim() !== '' && MESSENGER_URL !== '#')
 const PHONE_DISPLAY = studio.branding.phoneDisplay
 const PHONE_RAW = studio.branding.phoneRaw
 const YANDEX_REVIEWS_URL = studio.rating.sourceUrl
@@ -58,6 +59,24 @@ function getMessengerStyles(type: string) {
   }
 }
 const messengerTheme = getMessengerStyles(studio.branding.messenger.type)
+
+function getMessengerLinkProps() {
+  if (HAS_MESSENGER) {
+    return {
+      href: MESSENGER_URL,
+      target: '_blank',
+      rel: 'noreferrer'
+    }
+  }
+  return {
+    href: '#',
+    role: 'button',
+    'aria-disabled': true,
+    onClick: (e: React.MouseEvent) => e.preventDefault(),
+    title: 'Чат подключается'
+  }
+}
+
 
 const services = studio.services
 const studioGallery = studio.gallery
@@ -124,7 +143,7 @@ function Header() {
         {links.map(([name, href]) => <a key={name} href={href} className="text-sm font-medium text-white/70 transition hover:text-white">{name}</a>)}
       </nav>
       <div className="hidden items-center gap-4 sm:flex">
-        <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-semibold transition', messengerTheme.badgeBorder)}>
+        <a {...getMessengerLinkProps()} className={cn('flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-semibold transition', messengerTheme.badgeBorder, !HAS_MESSENGER && 'cursor-default opacity-85 select-none hover:bg-transparent')}>
           <MessageCircle size={15} /> {studio.branding.messenger.label}
         </a>
         <a href={`tel:${PHONE_RAW}`} className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-acid hover:bg-acid hover:text-ink">
@@ -137,7 +156,7 @@ function Header() {
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: .05 } } }}>
         {links.map(([name, href], i) => <motion.a variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0 } }} key={name} href={href} onClick={() => setOpen(false)} className="flex items-center justify-between border-b border-white/10 py-4 font-display text-2xl text-bone"><span>{name}</span><span className="font-sans text-[10px] text-white/30">0{i + 1}</span></motion.a>)}
         <div className="mt-6 flex flex-col gap-3">
-          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition', messengerTheme.submitButton)}>
+          <a {...getMessengerLinkProps()} className={cn('flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition', messengerTheme.submitButton, !HAS_MESSENGER && 'cursor-default opacity-85 select-none')}>
             <MessageCircle size={17} /> {studio.branding.messenger.chatActionText}
           </a>
           <a href={`tel:${PHONE_RAW}`} className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 font-semibold text-white">
@@ -188,7 +207,7 @@ function Hero() {
           <a href="#kontakt" className="group flex min-h-14 items-center justify-between gap-6 rounded-full bg-acid px-7 font-bold text-ink transition hover:bg-white active:scale-[0.98]">
             {studio.hero.ctaPrimaryText} <ArrowRight className="transition group-hover:translate-x-1" size={19} />
           </a>
-          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex min-h-14 items-center justify-center gap-2 rounded-full border px-7 font-semibold transition', messengerTheme.heroButton)}>
+          <a {...getMessengerLinkProps()} className={cn('flex min-h-14 items-center justify-center gap-2 rounded-full border px-7 font-semibold transition', messengerTheme.heroButton, !HAS_MESSENGER && 'cursor-default opacity-85 select-none')}>
             <MessageCircle size={18} /> {studio.hero.ctaSecondaryText}
           </a>
         </motion.div>
@@ -228,7 +247,9 @@ function Contact() {
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    window.open(MESSENGER_URL, '_blank')
+    if (HAS_MESSENGER) {
+      window.open(MESSENGER_URL, '_blank')
+    }
     setSent(true)
   }
 
@@ -244,7 +265,7 @@ function Contact() {
             <span className="grid size-11 place-items-center rounded-full border border-white/15 transition group-hover:border-acid group-hover:text-acid"><Phone size={18} /></span>
             <div><span className="block text-xs text-white/40">Прямой звонок</span><b className="text-lg">{PHONE_DISPLAY}</b></div>
           </a>
-          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center gap-4 group', messengerTheme.linkText)}>
+          <a {...getMessengerLinkProps()} className={cn('flex items-center gap-4 group', messengerTheme.linkText, !HAS_MESSENGER && 'cursor-default select-none group-hover:no-underline')}>
             <span className={cn('grid size-11 place-items-center rounded-full border transition', messengerTheme.contactIcon)}><MessageCircle size={18} /></span>
             <div><span className="block text-xs text-white/40">{studio.branding.messenger.label}</span><b className="text-lg">{studio.branding.messenger.chatActionText}</b></div>
           </a>
@@ -334,7 +355,7 @@ function Projects() {
           Реальные фотографии автомобилей и процессов ухода без фильтров и искусственной ретуши.
         </p>
       </div>
-      <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white">
+      <a {...getMessengerLinkProps()} className={cn("flex items-center gap-2 text-sm font-semibold text-white/70", HAS_MESSENGER ? "hover:text-white" : "cursor-default select-none")}>
         <MessageCircle size={17} /> Запросить больше фото ({studio.branding.messenger.chatActionText})
       </a>
     </motion.div>
@@ -418,11 +439,10 @@ function PriceCard({ title, price, desc, items, featured, badge }: { title: stri
     </div>
     <div className="mt-8 pt-6 border-t border-black/10">
       <a
-        href={MESSENGER_URL}
-        target="_blank"
-        rel="noreferrer"
+        {...getMessengerLinkProps()}
         className={cn(
           'flex min-h-11 w-full items-center justify-center gap-2 rounded-xl text-xs font-bold transition duration-200',
+          !HAS_MESSENGER && 'cursor-default select-none',
           featured
             ? 'bg-acid text-ink hover:bg-white'
             : 'border border-black/15 bg-black/[0.03] text-ink hover:border-black hover:bg-black hover:text-white'
@@ -602,7 +622,7 @@ function Footer() {
         <div className="text-sm">
           <b className="mb-4 block text-xs uppercase tracking-widest text-white/35">Связь</b>
           <a href={`tel:${PHONE_RAW}`} className="block font-semibold hover:text-acid transition">{PHONE_DISPLAY}</a>
-          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('mt-2 block hover:underline', messengerTheme.linkText)}>{studio.branding.messenger.label}</a>
+          <a {...getMessengerLinkProps()} className={cn('mt-2 block', HAS_MESSENGER ? ('hover:underline ' + messengerTheme.linkText) : 'text-white/40 cursor-default select-none hover:no-underline')}>{studio.branding.messenger.label}</a>
         </div>
       </div>
       <div className="flex flex-col gap-4 pt-7 text-[11px] text-white/35 sm:flex-row sm:justify-between">
@@ -637,10 +657,8 @@ export function Home() {
         initial={{ y: 90 }}
         animate={{ y: 0 }}
         transition={{ delay: .8, type: 'spring', stiffness: 180, damping: 22 }}
-        href={MESSENGER_URL}
-        target="_blank"
-        rel="noreferrer"
-        className={cn('fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full px-6 font-bold shadow-2xl sm:hidden', messengerTheme.floatingBar)}
+        {...getMessengerLinkProps()}
+        className={cn('fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full px-6 font-bold shadow-2xl sm:hidden', messengerTheme.floatingBar, !HAS_MESSENGER && 'cursor-default select-none')}
       >
         <span>{studio.branding.messenger.chatActionText}</span>
         <MessageCircle size={20} />
