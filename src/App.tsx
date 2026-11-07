@@ -162,8 +162,8 @@ function Hero() {
           <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] text-acid">★ 4.9 (278 отзывов)</span>
         </motion.div>
         <motion.h1 variants={reveal} className="font-display text-[clamp(2.8rem,6.8vw,6.5rem)] font-bold leading-[.92] tracking-[-.045em] text-white">
-          Броня и глянец<br />
-          <span className="text-white">для премиум авто.</span>
+          Блеск и защита<br />
+          <span className="text-white">для вашего авто.</span>
         </motion.h1>
         <motion.p variants={reveal} className="mt-7 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
           Комплексная мойка, керамическое покрытие кузова, глубокая химчистка салона и мойка двигателя на ул. Первомайской, 55 в Краснодаре. Профессиональная автохимия и честные цены без переплат.
