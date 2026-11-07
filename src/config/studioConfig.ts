@@ -133,8 +133,8 @@ export const defaultStudioConfig: StudioConfig = {
     "/photos/geen_auto_spa/geen_2.jpg",
     "/photos/geen_auto_spa/geen_3.jpg",
     "/photos/geen_auto_spa/geen_4.jpg",
-    "/projects/bmw-m4.png",
-    "/projects/porsche-911.png"
+    "/images/project-sedan.webp",
+    "/images/project-ev.webp"
   ],
   "testimonials": [
     {

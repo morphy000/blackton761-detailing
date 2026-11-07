@@ -16,6 +16,15 @@ const PHONE_RAW = studio.branding.phoneRaw
 const YANDEX_REVIEWS_URL = studio.rating.sourceUrl
 const STUDIO_NAME = studio.branding.fullName || `${studio.branding.namePrefix} ${studio.branding.nameHighlight}`
 
+const FALLBACK_GALLERY_IMAGES = [
+  '/images/project-sedan.webp',
+  '/images/project-ev.webp',
+  '/images/project-estate.webp',
+  '/images/project-hatch.webp',
+  '/images/audi.webp',
+  '/images/bmw.webp'
+]
+
 function getMessengerStyles(type: string) {
   switch (type) {
     case 'whatsapp':
@@ -148,7 +157,17 @@ function Hero() {
   const reduce = useReducedMotion()
   return <section className="relative min-h-[760px] overflow-hidden bg-ink text-white sm:min-h-[820px] lg:h-screen lg:min-h-[760px]">
     <div className="absolute inset-0">
-      <img src={studioGallery[0] || "/photos/photo_1.jpg"} alt={`Бокс ${STUDIO_NAME}`} className="h-full w-full object-cover object-[60%_center]" fetchPriority="high" />
+      <img
+        src={studioGallery[0] || "/images/hero.webp"}
+        alt={`Бокс ${STUDIO_NAME}`}
+        onError={(e) => {
+          if (e.currentTarget.src !== '/images/hero.webp' && !e.currentTarget.src.endsWith('/images/hero.webp')) {
+            e.currentTarget.src = '/images/hero.webp'
+          }
+        }}
+        className="h-full w-full object-cover object-[60%_center]"
+        fetchPriority="high"
+      />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,.96)_0%,rgba(5,5,5,.75)_50%,rgba(5,5,5,.3)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(5,5,5,.85)_0%,transparent_50%)]" />
     </div>
@@ -334,6 +353,12 @@ function Projects() {
               src={img}
               alt={`Работа студии #${i + 1}`}
               loading="lazy"
+              onError={(e) => {
+                const fallback = FALLBACK_GALLERY_IMAGES[i % FALLBACK_GALLERY_IMAGES.length]
+                if (e.currentTarget.src !== fallback && !e.currentTarget.src.endsWith(fallback)) {
+                  e.currentTarget.src = fallback
+                }
+              }}
               className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
