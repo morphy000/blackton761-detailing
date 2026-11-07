@@ -81,7 +81,7 @@ function Loader({ onComplete }: { onComplete: () => void }) {
     <div className="w-[min(320px,76vw)] text-center">
       <motion.div initial={{ opacity: 0, scale: .92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .55 }} className="flex justify-center"><Logo /></motion.div>
       <div className="mt-8 h-px overflow-hidden bg-white/15"><motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }} className="h-full origin-left bg-acid" /></div>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .2 }} className="mt-4 text-[10px] font-bold uppercase tracking-[.24em] text-white/50">Премиум детейлинг Краснодар</motion.p>
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .2 }} className="mt-4 text-[10px] font-bold uppercase tracking-[.24em] text-white/50">Автомойка и детейлинг · Краснодар</motion.p>
     </div>
   </motion.div>
 }
@@ -93,15 +93,19 @@ function ScrollProgress() {
 }
 
 function Logo({ light = true }: { light?: boolean }) {
-  return <Link to="/" className={cn('group flex items-center gap-3.5', light ? 'text-bone' : 'text-ink')} aria-label="БЛЕСК — главная">
-    <span className={cn('relative grid size-10 place-items-center overflow-hidden rounded-[11px] border transition duration-500 group-hover:rotate-3', light ? 'border-white/25 bg-white/[.04]' : 'border-black/20')}>
-      <Sparkles className="size-5 text-acid" />
-      <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-acid transition-all duration-500 group-hover:w-full" />
-    </span>
-    <span className="flex flex-col leading-none">
-      <span className="font-display text-[20px] font-bold tracking-[.14em]">БЛЕСК</span>
-      <span className="mt-1 text-[8px] font-bold tracking-[.25em] text-muted">DETAILING & PPF</span>
-    </span>
+  return <Link to="/" className={cn('group flex items-center gap-3', light ? 'text-bone' : 'text-ink')} aria-label="АВТОМОЙКА БЛЕСК — главная">
+    <div className="relative size-11 overflow-hidden rounded-xl border border-white/20 bg-black transition duration-300 group-hover:border-acid shrink-0">
+      <img src="/logo.jpg" alt="Логотип Автомойка Блеск" className="h-full w-full object-cover" />
+    </div>
+    <div className="flex flex-col leading-none">
+      <div className="flex items-center gap-1.5 font-display text-[17px] font-bold tracking-tight">
+        <span className={light ? 'text-white' : 'text-ink'}>АВТОМОЙКА</span>
+        <span className="text-red-500 font-extrabold tracking-wide">БЛЕСК</span>
+      </div>
+      <span className="mt-1 text-[8.5px] font-bold tracking-[.18em] text-white/50 uppercase">
+        Краснодар · Первомайская, 55
+      </span>
+    </div>
   </Link>
 }
 
@@ -566,7 +570,7 @@ function Footer() {
         <div className="sm:col-span-2">
           <Logo />
           <p className="mt-5 max-w-sm text-xs leading-5 text-white/50">
-            Студия детейлинга и бронирования «Блеск». Краснодар, ул. Первомайская, 55. Профессиональная защита и уход за автомобилями премиум-класса.
+            Автомойка и детейлинг «Блеск». Краснодар, ул. Первомайская, 55. Профессиональная мойка кузова и салона, керамика, химчистка и качественный уход.
           </p>
         </div>
         <div className="text-sm">
@@ -580,7 +584,7 @@ function Footer() {
         </div>
       </div>
       <div className="flex flex-col gap-4 pt-7 text-[11px] text-white/35 sm:flex-row sm:justify-between">
-        <p>© 2026 Студия детейлинга «Блеск». Все права защищены.</p>
+        <p>© 2026 Автомойка «Блеск». Все права защищены.</p>
         <div className="flex gap-5">
           <span>Краснодар, Россия</span>
         </div>
