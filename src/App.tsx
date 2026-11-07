@@ -109,7 +109,7 @@ function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => { const fn = () => setScrolled(window.scrollY > 24); window.addEventListener('scroll', fn); return () => window.removeEventListener('scroll', fn) }, [])
-  const links = [['Услуги', '#uslugi'], ['Калькулятор', '#kalkulyator'], ['Работы', '#realizacii'], ['Цены', '#cennik'], ['Контакты', '#kontakt']]
+  const links = [['Запись', '#kontakt'], ['Услуги', '#uslugi'], ['Работы', '#realizacii'], ['Цены', '#cennik'], ['Карта', '#karta']]
   
   return <header className={cn('fixed inset-x-0 top-0 z-50 transition-all duration-300', scrolled && 'border-b border-white/10 bg-ink/90 backdrop-blur-xl')}>
     <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
@@ -169,8 +169,8 @@ function Hero() {
           Комплексная мойка, керамическое покрытие кузова, глубокая химчистка салона и мойка двигателя на ул. Первомайской, 55 в Краснодаре. Профессиональная автохимия и честные цены без переплат.
         </motion.p>
         <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="#kalkulyator" className="group flex min-h-14 items-center justify-between gap-6 rounded-full bg-acid px-7 font-bold text-ink transition hover:bg-white active:scale-[0.98]">
-            Рассчитать стоимость онлайн <ArrowRight className="transition group-hover:translate-x-1" size={19} />
+          <a href="#kontakt" className="group flex min-h-14 items-center justify-between gap-6 rounded-full bg-acid px-7 font-bold text-ink transition hover:bg-white active:scale-[0.98]">
+            Записаться на осмотр <ArrowRight className="transition group-hover:translate-x-1" size={19} />
           </a>
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex min-h-14 items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-7 font-semibold text-emerald-400 transition hover:bg-emerald-500 hover:text-black">
             <MessageCircle size={18} /> Написать в WhatsApp
@@ -202,134 +202,6 @@ function TrustStrip() {
           </div>
         </div>
       ))}
-    </div>
-  </section>
-}
-
-function CalculatorSection() {
-  const [carType, setCarType] = useState('sedan')
-  const [packageType, setPackageType] = useState('wash')
-
-  const basePrices: Record<string, Record<string, { price: string, days: string }>> = {
-    sedan: {
-      wash: { price: '1 400 ₽', days: '1–1.5 часа' },
-      ceramic: { price: '7 999 ₽', days: '1–2 дня' },
-      dryclean: { price: '7 999 ₽', days: '1 день' },
-      engine_wash: { price: '1 499 ₽', days: '1 час' },
-    },
-    crossover: {
-      wash: { price: '1 600 ₽', days: '1.5 часа' },
-      ceramic: { price: '8 999 ₽', days: '1–2 дня' },
-      dryclean: { price: '8 999 ₽', days: '1 день' },
-      engine_wash: { price: '1 699 ₽', days: '1 час' },
-    },
-    suv: {
-      wash: { price: '1 800 ₽', days: '2 часа' },
-      ceramic: { price: '9 999 ₽', days: '2 дня' },
-      dryclean: { price: '9 999 ₽', days: '1 день' },
-      engine_wash: { price: '1 899 ₽', days: '1.5 часа' },
-    }
-  }
-
-  const current = basePrices[carType][packageType]
-  const waMessage = encodeURIComponent(`Здравствуйте! Рассчитал на сайте ориентир: Класс [${carType.toUpperCase()}], услуга [${packageType}]. Хочу зафиксировать цену ${current.price} и согласовать дату осмотра.`)
-
-  return <section id="kalkulyator" className="relative overflow-hidden bg-ink px-5 py-24 text-bone sm:px-8 sm:py-32 lg:px-12">
-    <div className="mx-auto max-w-[1344px]">
-      <SectionLabel>Онлайн-расчет</SectionLabel>
-      <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-        <div>
-          <h2 className="font-display text-4xl font-bold tracking-tight sm:text-6xl">
-            Калькулятор детейлинга и ухода
-          </h2>
-          <p className="mt-4 max-w-xl text-base text-white/60">
-            Выберите класс вашего авто и пакет услуг для мгновенного расчета стоимости и бронирования даты.
-          </p>
-        </div>
-      </div>
-
-      <div className="grid gap-8 rounded-3xl border border-white/10 bg-graphite p-6 sm:p-10 lg:grid-cols-12">
-        <div className="space-y-8 lg:col-span-7">
-          <div>
-            <label className="mb-3 block text-xs font-bold uppercase tracking-wider text-muted">1. Класс автомобиля</label>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                ['sedan', 'Седан / Купе', 'BMW 3/5, Camry, Zeekr 001'],
-                ['crossover', 'Кроссовер', 'BMW X5, Cayenne, Li L7'],
-                ['suv', 'Большой SUV', 'Li L9, Land Cruiser, Escalade']
-              ].map(([id, label, sub]) => (
-                <button
-                  key={id}
-                  onClick={() => setCarType(id)}
-                  className={cn(
-                    'rounded-xl border p-4 text-left transition',
-                    carType === id ? 'border-acid bg-acid/10 text-white' : 'border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20'
-                  )}
-                >
-                  <b className="block text-sm font-semibold">{label}</b>
-                  <span className="mt-1 block text-[10px] text-white/40">{sub}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="mb-3 block text-xs font-bold uppercase tracking-wider text-muted">2. Выберите услугу</label>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                ['wash', 'Комплексная мойка (кузов + салон)', 'Бережная мойка кузова + влажная уборка и пылесос салона'],
-                ['ceramic', 'Керамическое покрытие кузова', 'Стойкая защита ЛКП от химии, ультрафиолета и реагентов'],
-                ['dryclean', 'Химчистка салона авто', 'Глубокая очистка сидений, ковров, потолка и пластика (-30%)'],
-                ['engine_wash', 'Мойка подкапотного пространства', 'Безопасная очистка двигателя диэлектриком с консервацией']
-              ].map(([id, label, desc]) => (
-                <button
-                  key={id}
-                  onClick={() => setPackageType(id)}
-                  className={cn(
-                    'rounded-xl border p-4 text-left transition',
-                    packageType === id ? 'border-acid bg-acid/10 text-white' : 'border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20'
-                  )}
-                >
-                  <b className="block text-sm font-semibold">{label}</b>
-                  <span className="mt-1 block text-[11px] leading-relaxed text-white/50">{desc}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-ink p-6 sm:p-8 lg:col-span-5">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-acid">
-              <Calculator size={16} /> Предварительная смета
-            </div>
-            <div className="mt-6">
-              <span className="text-xs text-white/50">Стоимость под ключ:</span>
-              <div className="font-display text-4xl font-bold text-bone sm:text-5xl">{current.price}</div>
-              <span className="mt-2 block text-xs text-white/40">Срок выполнения: {current.days}</span>
-            </div>
-            <ul className="mt-6 space-y-2 border-t border-white/10 pt-6 text-xs text-white/60">
-              <li className="flex items-center gap-2"><Check size={14} className="text-acid" /> Мойка и деконтаминация включены</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-acid" /> Гарантийный акт и осмотр через 14 дней</li>
-              <li className="flex items-center gap-2"><Check size={14} className="text-acid" /> Бесплатный чай/кофе в зоне отдыха</li>
-            </ul>
-          </div>
-
-          <div className="mt-8">
-            <a
-              href={`${WHATSAPP_URL}?text=${waMessage}`}
-              target="_blank"
-              rel="noreferrer"
-              className="flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-emerald-500 px-6 font-bold text-black transition hover:bg-emerald-400"
-            >
-              <MessageCircle size={18} /> Зафиксировать расчет в WhatsApp
-            </a>
-            <span className="mt-2 block text-center text-[10px] text-white/35">
-              Отвечаем в течение 5 минут в рабочее время
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 }
@@ -581,14 +453,34 @@ function MapSection() {
 
 function Contact() {
   const [sent, setSent] = useState(false)
-  const submit = (e: FormEvent) => { e.preventDefault(); setSent(true) }
+  const [service, setService] = useState('Комплексная мойка (кузов + салон) — 1 400 ₽')
+
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    const name = fd.get('name') || 'Не указано'
+    const phone = fd.get('phone') || 'Не указан'
+    const car = fd.get('car') || 'Не указана'
+    const selectedService = fd.get('service') || service
+
+    const message = `Здравствуйте! Хочу записаться на осмотр и расчет:
+Имя: ${name}
+Телефон: ${phone}
+Автомобиль: ${car}
+Услуга: ${selectedService}`
+
+    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(message)}`, '_blank')
+    setSent(true)
+  }
+
   return <section id="kontakt" className="relative overflow-hidden bg-graphite px-5 py-24 text-bone sm:px-8 sm:py-32 lg:px-12">
     <div className="pointer-events-none absolute -right-40 top-0 size-[600px] rounded-full bg-acid/5 blur-3xl" />
     <div className="relative mx-auto grid max-w-[1344px] gap-14 lg:grid-cols-2">
       <div>
-        <SectionLabel>Контакты</SectionLabel>
+        <SectionLabel>Онлайн-запись</SectionLabel>
         <h2 className="max-w-xl font-display text-4xl font-bold leading-[1.03] tracking-[-.045em] sm:text-6xl">Запишитесь на осмотр и расчет.</h2>
-        <p className="mt-7 max-w-md text-sm leading-6 text-white/60">Ответим на любые вопросы, проведем осмотр и зафиксируем точную смету по официальному прайсу.</p>
+        <p className="mt-7 max-w-md text-sm leading-6 text-white/60">Ответим на любые вопросы, проведем осмотр под инспекционным светом и зафиксируем точную смету по официальному прайсу без скрытых доплат.</p>
         <div className="mt-10 space-y-5 text-sm">
           <a href={`tel:${PHONE_RAW}`} className="flex items-center gap-4">
             <span className="grid size-11 place-items-center rounded-full border border-white/15"><Phone size={18} /></span>
@@ -596,7 +488,7 @@ function Contact() {
           </a>
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-emerald-400">
             <span className="grid size-11 place-items-center rounded-full border border-emerald-500/30 bg-emerald-500/10"><MessageCircle size={18} /></span>
-            <div><span className="block text-xs text-white/40">WhatsApp чат</span><b className="text-lg">Написать сообщение</b></div>
+            <div><span className="block text-xs text-white/40">WhatsApp чат</span><b className="text-lg">Написать мастеру</b></div>
           </a>
           <div className="flex items-center gap-4">
             <span className="grid size-11 place-items-center rounded-full border border-white/15"><MapPin size={18} /></span>
@@ -609,8 +501,15 @@ function Contact() {
           <div className="grid min-h-[420px] place-items-center text-center">
             <div>
               <span className="mx-auto grid size-14 place-items-center rounded-full bg-acid"><Check /></span>
-              <h3 className="mt-6 font-display text-3xl font-bold">Заявка принята.</h3>
-              <p className="mt-3 text-sm text-black/60">Мастер свяжется с вами в течение 10 минут.</p>
+              <h3 className="mt-6 font-display text-3xl font-bold">Заявка отправлена.</h3>
+              <p className="mt-3 text-sm text-black/60">Мы открыли чат WhatsApp для согласования удобного времени визита.</p>
+              <button
+                type="button"
+                onClick={() => setSent(false)}
+                className="mt-6 inline-flex text-xs font-bold underline"
+              >
+                Отправить еще одну запись
+              </button>
             </div>
           </div>
         ) : (
@@ -620,22 +519,33 @@ function Contact() {
               <Field label="Ваше имя" name="name" placeholder="Как вас зовут?" />
               <Field label="Телефон" name="phone" placeholder="+7 (9XX) XXX-XX-XX" type="tel" />
             </div>
-            <Field label="Марка и модель авто" name="car" placeholder="Например: Zeekr 001 или Li L9" />
+            <Field label="Марка и модель авто" name="car" placeholder="Например: Camry, Нива, BMW, Kia" />
             <label className="mt-5 block text-xs font-bold">Интересующая услуга
-              <select name="service" className="mt-2 min-h-12 w-full appearance-none rounded-lg border border-black/15 bg-white px-4 text-sm outline-none focus:border-black">
-                <option>Комплексная мойка (кузов + салон) — 1 400 ₽</option>
-                <option>Керамическое покрытие кузова — 7 999 ₽</option>
-                <option>Химчистка салона — 7 999 ₽</option>
-                <option>Трёхфазная детейлинг мойка кузова — 1 799 ₽</option>
-                <option>Мойка подкапотного пространства — 1 499 ₽</option>
-                <option>Пропитка кожи салона — 1 999 ₽</option>
-                <option>Озонирование салона — 1 999 ₽</option>
-                <option>Кварцевое покрытие кузова — 500 ₽</option>
+              <select
+                name="service"
+                value={service}
+                onChange={e => setService(e.target.value)}
+                className="mt-2 min-h-12 w-full appearance-none rounded-lg border border-black/15 bg-white px-4 text-sm outline-none focus:border-black"
+              >
+                <option value="Комплексная мойка (кузов + салон) — 1 400 ₽">Комплексная мойка (кузов + салон) — 1 400 ₽</option>
+                <option value="Керамическое покрытие кузова — 7 999 ₽">Керамическое покрытие кузова — 7 999 ₽</option>
+                <option value="Химчистка салона — 7 999 ₽">Химчистка салона — 7 999 ₽</option>
+                <option value="Трёхфазная детейлинг мойка кузова — 1 799 ₽">Трёхфазная детейлинг мойка кузова — 1 799 ₽</option>
+                <option value="Мойка подкапотного пространства — 1 499 ₽">Мойка подкапотного пространства — 1 499 ₽</option>
+                <option value="Пропитка кожи салона — 1 999 ₽">Пропитка кожи салона — 1 999 ₽</option>
+                <option value="Озонирование салона — 1 999 ₽">Озонирование салона — 1 999 ₽</option>
+                <option value="Кварцевое покрытие кузова — 500 ₽">Кварцевое покрытие кузова — 500 ₽</option>
               </select>
             </label>
-            <button className="mt-6 flex min-h-14 w-full items-center justify-between rounded-full bg-ink px-7 font-bold text-white transition hover:bg-acid hover:text-ink">
-              Получить расчет стоимости <ArrowRight size={18} />
+            <button
+              type="submit"
+              className="mt-6 flex min-h-14 w-full items-center justify-between rounded-full bg-ink px-7 font-bold text-white transition hover:bg-acid hover:text-ink"
+            >
+              Записаться в WhatsApp <ArrowRight size={18} />
             </button>
+            <span className="mt-3 block text-center text-[11px] text-black/50">
+              Отвечаем в течение 5 минут в рабочее время
+            </span>
           </>
         )}
       </form>
@@ -688,14 +598,13 @@ function Home() {
       <main>
         <Hero />
         <TrustStrip />
-        <CalculatorSection />
+        <Contact />
         <Services />
         <Projects />
         <Pricing />
         <Testimonials />
         <FAQ />
         <MapSection />
-        <Contact />
       </main>
       <Footer />
       <motion.a
