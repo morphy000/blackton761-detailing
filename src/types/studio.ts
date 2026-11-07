@@ -8,6 +8,7 @@ export interface MessengerConfig {
 }
 
 export interface StudioBranding {
+  fullName?: string // e.g. "ГудВуд", "Блеск", "Sb Detailing"
   namePrefix: string // e.g. "АВТОМОЙКА"
   nameHighlight: string // e.g. "БЛЕСК"
   tagline: string // e.g. "Детейлинг и уход · Краснодар"

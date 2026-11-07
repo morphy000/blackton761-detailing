@@ -10,10 +10,45 @@ import { cn } from './lib/utils'
 import { getActiveStudioConfig } from './config/studioConfig'
 
 const studio = getActiveStudioConfig()
-const MAX_CHAT_URL = studio.branding.messenger.url
+const MESSENGER_URL = studio.branding.messenger.url
 const PHONE_DISPLAY = studio.branding.phoneDisplay
 const PHONE_RAW = studio.branding.phoneRaw
 const YANDEX_REVIEWS_URL = studio.rating.sourceUrl
+const STUDIO_NAME = studio.branding.fullName || `${studio.branding.namePrefix} ${studio.branding.nameHighlight}`
+
+function getMessengerStyles(type: string) {
+  switch (type) {
+    case 'whatsapp':
+      return {
+        badgeBorder: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-600 hover:text-white',
+        heroButton: 'border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-600 hover:text-white',
+        submitButton: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+        linkText: 'text-emerald-400',
+        contactIcon: 'border-emerald-500/30 bg-emerald-500/10 group-hover:bg-emerald-600 group-hover:text-white',
+        floatingBar: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+      }
+    case 'telegram':
+      return {
+        badgeBorder: 'border-sky-500/30 bg-sky-500/10 text-sky-400 hover:bg-sky-600 hover:text-white',
+        heroButton: 'border-sky-500/40 bg-sky-500/15 text-sky-400 hover:bg-sky-600 hover:text-white',
+        submitButton: 'bg-sky-600 hover:bg-sky-500 text-white',
+        linkText: 'text-sky-400',
+        contactIcon: 'border-sky-500/30 bg-sky-500/10 group-hover:bg-sky-600 group-hover:text-white',
+        floatingBar: 'bg-sky-600 hover:bg-sky-500 text-white',
+      }
+    case 'max':
+    default:
+      return {
+        badgeBorder: 'border-indigo-400/30 bg-indigo-500/10 text-indigo-300 hover:bg-indigo-600 hover:text-white',
+        heroButton: 'border-indigo-400/40 bg-indigo-500/15 text-indigo-300 hover:bg-indigo-600 hover:text-white',
+        submitButton: 'bg-indigo-600 hover:bg-indigo-500 text-white',
+        linkText: 'text-indigo-400',
+        contactIcon: 'border-indigo-500/30 bg-indigo-500/10 group-hover:bg-indigo-600 group-hover:text-white',
+        floatingBar: 'bg-indigo-600 hover:bg-indigo-500 text-white',
+      }
+  }
+}
+const messengerTheme = getMessengerStyles(studio.branding.messenger.type)
 
 const services = studio.services
 const studioGallery = studio.gallery
@@ -45,10 +80,10 @@ function ScrollProgress() {
 }
 
 function Logo({ light = true }: { light?: boolean }) {
-  return <Link to="/" className={cn('group flex items-center gap-3', light ? 'text-bone' : 'text-ink')} aria-label={`${studio.branding.namePrefix} ${studio.branding.nameHighlight} — главная`}>
+  return <Link to="/" className={cn('group flex items-center gap-3', light ? 'text-bone' : 'text-ink')} aria-label={`${STUDIO_NAME} — главная`}>
     {studio.branding.logoUrl ? (
       <div className="relative size-11 overflow-hidden rounded-xl border border-white/20 bg-black transition duration-300 group-hover:border-acid shrink-0">
-        <img src={studio.branding.logoUrl} alt={`Логотип ${studio.branding.nameHighlight}`} className="h-full w-full object-cover" />
+        <img src={studio.branding.logoUrl} alt={`Логотип ${STUDIO_NAME}`} className="h-full w-full object-cover" />
       </div>
     ) : (
       <span className={cn('relative grid size-10 place-items-center overflow-hidden rounded-[11px] border transition duration-500 group-hover:rotate-3', light ? 'border-white/25 bg-white/[.04]' : 'border-black/20')}>
@@ -80,7 +115,7 @@ function Header() {
         {links.map(([name, href]) => <a key={name} href={href} className="text-sm font-medium text-white/70 transition hover:text-white">{name}</a>)}
       </nav>
       <div className="hidden items-center gap-4 sm:flex">
-        <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-4 py-2.5 text-xs font-semibold text-indigo-300 transition hover:bg-indigo-600 hover:text-white">
+        <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-semibold transition', messengerTheme.badgeBorder)}>
           <MessageCircle size={15} /> {studio.branding.messenger.label}
         </a>
         <a href={`tel:${PHONE_RAW}`} className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-acid hover:bg-acid hover:text-ink">
@@ -93,7 +128,7 @@ function Header() {
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: .05 } } }}>
         {links.map(([name, href], i) => <motion.a variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0 } }} key={name} href={href} onClick={() => setOpen(false)} className="flex items-center justify-between border-b border-white/10 py-4 font-display text-2xl text-bone"><span>{name}</span><span className="font-sans text-[10px] text-white/30">0{i + 1}</span></motion.a>)}
         <div className="mt-6 flex flex-col gap-3">
-          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-6 py-3.5 font-bold text-white transition hover:bg-indigo-500">
+          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition', messengerTheme.submitButton)}>
             <MessageCircle size={17} /> {studio.branding.messenger.chatActionText}
           </a>
           <a href={`tel:${PHONE_RAW}`} className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 font-semibold text-white">
@@ -113,7 +148,7 @@ function Hero() {
   const reduce = useReducedMotion()
   return <section className="relative min-h-[760px] overflow-hidden bg-ink text-white sm:min-h-[820px] lg:h-screen lg:min-h-[760px]">
     <div className="absolute inset-0">
-      <img src={studioGallery[0] || "/photos/photo_1.jpg"} alt={`Бокс ${studio.branding.nameHighlight}`} className="h-full w-full object-cover object-[60%_center]" fetchPriority="high" />
+      <img src={studioGallery[0] || "/photos/photo_1.jpg"} alt={`Бокс ${STUDIO_NAME}`} className="h-full w-full object-cover object-[60%_center]" fetchPriority="high" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,.96)_0%,rgba(5,5,5,.75)_50%,rgba(5,5,5,.3)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(5,5,5,.85)_0%,transparent_50%)]" />
     </div>
@@ -134,7 +169,7 @@ function Hero() {
           <a href="#kontakt" className="group flex min-h-14 items-center justify-between gap-6 rounded-full bg-acid px-7 font-bold text-ink transition hover:bg-white active:scale-[0.98]">
             {studio.hero.ctaPrimaryText} <ArrowRight className="transition group-hover:translate-x-1" size={19} />
           </a>
-          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex min-h-14 items-center justify-center gap-2 rounded-full border border-indigo-400/40 bg-indigo-500/15 px-7 font-semibold text-indigo-300 transition hover:bg-indigo-600 hover:text-white">
+          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex min-h-14 items-center justify-center gap-2 rounded-full border px-7 font-semibold transition', messengerTheme.heroButton)}>
             <MessageCircle size={18} /> {studio.hero.ctaSecondaryText}
           </a>
         </motion.div>
@@ -174,7 +209,7 @@ function Contact() {
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    window.open(MAX_CHAT_URL, '_blank')
+    window.open(MESSENGER_URL, '_blank')
     setSent(true)
   }
 
@@ -190,8 +225,8 @@ function Contact() {
             <span className="grid size-11 place-items-center rounded-full border border-white/15 transition group-hover:border-acid group-hover:text-acid"><Phone size={18} /></span>
             <div><span className="block text-xs text-white/40">Прямой звонок</span><b className="text-lg">{PHONE_DISPLAY}</b></div>
           </a>
-          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-4 text-indigo-400 group">
-            <span className="grid size-11 place-items-center rounded-full border border-indigo-500/30 bg-indigo-500/10 transition group-hover:bg-indigo-600 group-hover:text-white"><MessageCircle size={18} /></span>
+          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('flex items-center gap-4 group', messengerTheme.linkText)}>
+            <span className={cn('grid size-11 place-items-center rounded-full border transition', messengerTheme.contactIcon)}><MessageCircle size={18} /></span>
             <div><span className="block text-xs text-white/40">{studio.branding.messenger.label}</span><b className="text-lg">{studio.branding.messenger.chatActionText}</b></div>
           </a>
           <div className="flex items-center gap-4">
@@ -240,7 +275,7 @@ function Contact() {
             </label>
             <button
               type="submit"
-              className="mt-6 flex min-h-14 w-full items-center justify-between rounded-full bg-indigo-600 px-7 font-bold text-white transition hover:bg-indigo-500"
+              className={cn('mt-6 flex min-h-14 w-full items-center justify-between rounded-full px-7 font-bold transition', messengerTheme.submitButton)}
             >
               {studio.branding.messenger.chatActionText} <ArrowRight size={18} />
             </button>
@@ -280,8 +315,8 @@ function Projects() {
           Реальные фотографии автомобилей и процессов ухода без фильтров и искусственной ретуши.
         </p>
       </div>
-      <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white">
-        <MessageCircle size={17} /> Запросить больше фото в Max
+      <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white">
+        <MessageCircle size={17} /> Запросить больше фото ({studio.branding.messenger.chatActionText})
       </a>
     </motion.div>
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -325,7 +360,7 @@ function Pricing() {
         <SectionLabel>Прайс-лист услуг</SectionLabel>
         <h2 className="font-display text-4xl font-bold leading-[1.03] tracking-[-.045em] text-ink sm:text-6xl">Честная стоимость без сюрпризов.</h2>
         <p className="mt-7 max-w-md text-sm leading-6 text-black/60">
-          Официальный прайс-лист студии «{studio.branding.nameHighlight}» ({studio.branding.address}). Профессиональная автохимия, бережное отношение к авто и фиксированные цены.
+          Официальный прайс-лист студии «{STUDIO_NAME}» ({studio.branding.address}). Профессиональная автохимия, бережное отношение к авто и фиксированные цены.
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
@@ -358,7 +393,7 @@ function PriceCard({ title, price, desc, items, featured, badge }: { title: stri
     </div>
     <div className="mt-8 pt-6 border-t border-black/10">
       <a
-        href={MAX_CHAT_URL}
+        href={MESSENGER_URL}
         target="_blank"
         rel="noreferrer"
         className={cn(
@@ -368,7 +403,7 @@ function PriceCard({ title, price, desc, items, featured, badge }: { title: stri
             : 'border border-black/15 bg-black/[0.03] text-ink hover:border-black hover:bg-black hover:text-white'
         )}
       >
-        <MessageCircle size={15} /> Выбрать услугу в Max
+        <MessageCircle size={15} /> Выбрать услугу ({studio.branding.messenger.chatActionText})
       </a>
     </div>
   </motion.article>
@@ -490,12 +525,12 @@ function FAQ() {
 function MapSection() {
   return <section id="karta" className="relative h-[480px] w-full overflow-hidden bg-ink">
     <iframe
-      src="https://yandex.ru/map-widget/v1/?ll=39.015971%2C45.047221&z=17&pt=39.015971,45.047221,pm2rdm"
+      src={studio.mapEmbedUrl || `https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(studio.branding.address)}`}
       width="100%"
       height="100%"
-      style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(120%) brightness(85%)' }}
+      style={{ border: 0 }}
       allowFullScreen={false}
-      loading="lazy"
+      loading="eager"
       title="Студия на Яндекс Картах"
     />
     <div className="pointer-events-none absolute bottom-8 left-5 right-5 sm:left-12 sm:right-auto">
@@ -525,13 +560,14 @@ function Field({ label, name, placeholder, type = 'text' }: { label: string, nam
 }
 
 function Footer() {
+  const city = studio.branding.address.split(',')[0].replace('г. ', '').trim()
   return <footer className="bg-ink px-5 pb-24 pt-16 text-bone sm:px-8 lg:px-12 lg:pb-10">
     <div className="mx-auto max-w-[1344px]">
       <div className="grid gap-10 border-b border-white/10 pb-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2">
           <Logo />
           <p className="mt-5 max-w-sm text-xs leading-5 text-white/50">
-            {studio.branding.namePrefix} «{studio.branding.nameHighlight}». {studio.branding.address}. Профессиональная мойка кузова и салона, керамика, химчистка и качественный уход.
+            {STUDIO_NAME}. {studio.branding.address}. Профессиональная оклейка PPF, полировка, керамика, химчистка и качественный детейлинг авто.
           </p>
         </div>
         <div className="text-sm">
@@ -541,13 +577,13 @@ function Footer() {
         <div className="text-sm">
           <b className="mb-4 block text-xs uppercase tracking-widest text-white/35">Связь</b>
           <a href={`tel:${PHONE_RAW}`} className="block font-semibold hover:text-acid transition">{PHONE_DISPLAY}</a>
-          <a href={MAX_CHAT_URL} target="_blank" rel="noreferrer" className="mt-2 block text-indigo-400 hover:underline">{studio.branding.messenger.label}</a>
+          <a href={MESSENGER_URL} target="_blank" rel="noreferrer" className={cn('mt-2 block hover:underline', messengerTheme.linkText)}>{studio.branding.messenger.label}</a>
         </div>
       </div>
       <div className="flex flex-col gap-4 pt-7 text-[11px] text-white/35 sm:flex-row sm:justify-between">
-        <p>© 2026 {studio.branding.namePrefix} «{studio.branding.nameHighlight}». Все права защищены.</p>
+        <p>© 2026 {STUDIO_NAME}. Все права защищены.</p>
         <div className="flex gap-5">
-          <span>Краснодар, Россия</span>
+          <span>{city}, Россия</span>
         </div>
       </div>
     </div>
@@ -576,10 +612,10 @@ export function Home() {
         initial={{ y: 90 }}
         animate={{ y: 0 }}
         transition={{ delay: .8, type: 'spring', stiffness: 180, damping: 22 }}
-        href={MAX_CHAT_URL}
+        href={MESSENGER_URL}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full bg-indigo-600 px-6 font-bold text-white shadow-2xl sm:hidden"
+        className={cn('fixed bottom-3 left-3 right-3 z-40 flex min-h-14 items-center justify-between rounded-full px-6 font-bold shadow-2xl sm:hidden', messengerTheme.floatingBar)}
       >
         <span>{studio.branding.messenger.chatActionText}</span>
         <MessageCircle size={20} />
